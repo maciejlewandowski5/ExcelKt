@@ -198,21 +198,6 @@ class ElementsTest {
 
     }
 
-
-    @Test
-    fun `a cell and row can be empty`() {
-        wb.apply {
-
-            sheet {
-                row()
-                row {
-                    cell()
-                }
-            }
-        }
-        expectThat(mockXSSFCell.cellType).isEqualTo(CELL_TYPE_BLANK)
-    }
-
     private fun createStyleWith(f: XSSFCellStyle.() -> Unit): XSSFCellStyle =
             XSSFWorkbook().createCellStyle().apply(f)
 }
