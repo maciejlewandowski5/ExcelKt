@@ -1,6 +1,7 @@
 package excelkt
 
 import com.nhaarman.mockitokotlin2.*
+import org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK
 import org.apache.poi.ss.usermodel.IndexedColors
 import org.apache.poi.xssf.usermodel.*
 import org.junit.Test
@@ -100,11 +101,11 @@ class ElementsTest {
         verify(mockXSSFCell).setCellValue(eq("Hello, Second Cell!"))
         verify(mockXSSFCell).setCellValue(eq(100.0))
         verify(mockXSSFCell).setCellValue(
-            eq(
-                Date.from(
-                    LocalDate.of(2021, 4, 28).atStartOfDay(ZoneId.systemDefault()).toInstant()
+                eq(
+                        Date.from(
+                                LocalDate.of(2021, 4, 28).atStartOfDay(ZoneId.systemDefault()).toInstant()
+                        )
                 )
-            )
         )
         verify(mockXSSFCell).setCellFormula(eq("A1+A2"))
     }
@@ -197,6 +198,21 @@ class ElementsTest {
 
     }
 
+
+    @Test
+    fun `a cell and row can be empty`() {
+        wb.apply {
+
+            sheet {
+                row()
+                row {
+                    cell()
+                }
+            }
+        }
+        verify(mockXSSFCell).cellType = CELL_TYPE_BLANK
+    }
+
     private fun createStyleWith(f: XSSFCellStyle.() -> Unit): XSSFCellStyle =
-        XSSFWorkbook().createCellStyle().apply(f)
+            XSSFWorkbook().createCellStyle().apply(f)
 }
