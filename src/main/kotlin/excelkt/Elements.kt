@@ -1,5 +1,6 @@
 package excelkt
 
+import org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK
 import org.apache.poi.xssf.usermodel.*
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -92,7 +93,7 @@ class Cell(
                     is LocalDateTime -> setCellValue(Date.from(it.atZone(ZoneId.systemDefault()).toInstant()))
                     else -> setCellValue(it.toString())
                 }
-            }
+            } ?: this.setCellType(CELL_TYPE_BLANK)
 
             this@Cell.style?.let {
                 cellStyle = it
