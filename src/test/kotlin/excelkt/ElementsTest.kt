@@ -210,7 +210,7 @@ class ElementsTest {
                 }
             }
         }
-        verify(mockXSSFCell).cellType = CELL_TYPE_BLANK
+        expectThat(mockXSSFCell.cellType).isEqualTo(CELL_TYPE_BLANK)
     }
 
     private fun createStyleWith(f: XSSFCellStyle.() -> Unit): XSSFCellStyle =
